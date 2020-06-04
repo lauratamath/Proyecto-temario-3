@@ -12,12 +12,19 @@
 @--------------------------- Área de datos ---------------------------------
 .data
 .align 2
-menu1:	.asciz "\nBienvenido al juego Pi-DOTS\n"
-opcion:	.asciz "1. Ver instrucciones\n2. Comenzar a jugar\n3. Salir\n Ingrese la opcion: "
-reglas:	.asciz "\n\t\t-----------Instrucciones-----------\n"
-reglas3:.asciz "El jugador debe unir la mayor cantidad  de caracteres del mismo tipo con líneas verticales y horizontales\n"
-reglas1:.asciz "Cuando conectalos caracteres del  mismo tipo,estos  desaparecen de  las  posibilidades  de ser  elegidos  paraunir,  y  se acumula 1 punto por cada letra unida\n"
-reglas2:.asciz "Si el jugador conecta 20  caracteres, entonces termina esa ronda.\nCada error de ingreso para unir puntos descuenta 3 puntos del total acumulado.\n"
+menu1:		.asciz "\nBienvenido al juego Pi-DOTS\n"
+opcion:		.asciz "1. Ver instrucciones\n2. Comenzar a jugar\n3. Salir\n Ingrese la opcion: "
+reglas:		.asciz "\n\t\t-----------Instrucciones-----------\n"
+reglas3:	.asciz "El jugador debe unir la mayor cantidad  de caracteres del mismo tipo con líneas verticales y horizontales\n"
+reglas1:	.asciz "Cuando conectalos caracteres del  mismo tipo,estos  desaparecen de  las  posibilidades  de ser  elegidos  paraunir,  y  se acumula 1 punto por cada letra unida\n"
+reglas2:	.asciz "Si el jugador conecta 20  caracteres, entonces termina esa ronda.\nCada error de ingreso para unir puntos descuenta 3 puntos del total acumulado.\n"
+arregloBase:.word  1,2,3	@3 posibles combinaciones
+arreglo1:	.word 1,2,3,4	@fila 1
+arreglo2:	.word 0,0,0,0	@fila 2
+areeglo3:	.word 0,0,0,0	@fila 3
+areeglo4:	.word 0,0,0,0	@fila 4
+string:		.asciz "%d"		@String format
+ref1:		.word arreglo1
 @----------------------------------------------------------------------------
 
 .text
@@ -27,6 +34,8 @@ reglas2:.asciz "Si el jugador conecta 20  caracteres, entonces termina esa ronda
 
 main:
 	stmfd sp!, {lr}
+	mov r7,#0
+	ldr r6,=ref1		@contador
 	
 @----------------- M E N U ----------------
 menu:
@@ -59,6 +68,7 @@ instructions:
 	ldr r0, =reglas2
 	bl printf
 	b menu
+@-------- I M P R E S I O N --------
 	
 @----------------- E X I T -----------------
 exit:
